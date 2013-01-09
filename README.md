@@ -14,7 +14,7 @@ Usage
 
 Ensure that [dflydev-git-subsplit][2] is installed correctly. If is not available
 in your version of git (likely true for versions older than 1.7.11)
-please install it manually from [here][https://github.com/apenwarr/git-subtree].
+please install it manually from [here][5].
 
 
 ### Installation
