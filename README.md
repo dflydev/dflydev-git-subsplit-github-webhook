@@ -6,6 +6,17 @@ Git Subsplit GitHub WebHook
 Automates the process of keeping one-way read-only subtree splits up to date
 with the source repository.
 
+The WebHook works in two parts, a web listener and a worker. The web listener
+adds requests to Redis and the worker processes the requests.
+
+The worker will interact with the system's git as the user running the worker.
+This means that the user running the worker should have its key added to
+the appropriate GitHub accounts.
+
+During testing it would make sense to run the worker manually. For production
+deployments it would probably make more sense to runt he worker using something
+along the lines of [upstart][6] or [supervisor][7].
+
 
 Usage
 -----
@@ -163,3 +174,5 @@ Thanks Igor. :)
 [3]: http://getcomposer.org
 [4]: https://igor.io
 [5]: https://github.com/apenwarr/git-subtree
+[6]: http://upstart.ubuntu.com
+[7]: http://supervisord.org
