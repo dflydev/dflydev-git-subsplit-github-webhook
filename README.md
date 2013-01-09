@@ -21,15 +21,15 @@ please install it manually from [here][5].
 
 #### If You Already Have Composer
 
-    composer create-project dflydev/git-subsplit-github-webhook:1.0.* \
-        --prefer-dist -n -s dev webhook
+    composer create-project dflydev/git-subsplit-github-webhook \
+        --keep-vcs -n -s dev webhook
     cd webhook
 
 #### If You Need Composer
 
     curl -s https://getcomposer.org/installer | php
-    php composer.phar create-project dflydev/git-subsplit-github-webhook:1.0.* \
-        --prefer-dist -n -s dev webhook
+    php composer.phar create-project dflydev/git-subsplit-github-webhook \
+        --keep-vcs -n -s dev webhook
     cd webhook
 
 ### Redis
