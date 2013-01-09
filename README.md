@@ -10,6 +10,13 @@ with the source repository.
 Usage
 -----
 
+### git-subsplit
+
+Ensure that [dflydev-git-subsplit][2] is installed correctly. If is not available
+in your version of git (likely true for versions older than 1.7.11)
+please install it manually from [here][https://github.com/apenwarr/git-subtree].
+
+
 ### Installation
 
 #### If You Already Have Composer
@@ -155,3 +162,4 @@ Thanks Igor. :)
 [2]: https://github.com/dflydev/git-subsplit
 [3]: http://getcomposer.org
 [4]: https://igor.io
+[5]: https://github.com/apenwarr/git-subtree
