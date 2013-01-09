@@ -1,0 +1,23 @@
+{
+    "working-directory": "/tmp/dflydev-git-subsplit-github-webhook-working",
+    "projects": {
+        "sculpin": {
+            "url": "https://github.com/sculpin/sculpin",
+            "splits": [
+                "src/Sculpin/Core:git@github.com:sculpin/core.git"
+            ]
+        },
+        "react": {
+            "url": "https://github.com/reactphp/react",
+            "splits": [
+                "src/React/EventLoop:git@github.com:reactphp/event-loop.git",
+                "src/React/Stream:git@github.com:reactphp/stream.git",
+                "src/React/Cache:git@github.com:reactphp/cache.git",
+                "src/React/Socket:git@github.com:reactphp/socket.git",
+                "src/React/Http:git@github.com:reactphp/http.git",
+                "src/React/HttpClient:git@github.com:reactphp/http-client.git",
+                "src/React/Dns:git@github.com:reactphp/dns.git"
+            ]
+        }
+    }
+}

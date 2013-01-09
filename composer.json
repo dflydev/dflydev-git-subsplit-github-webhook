@@ -1,0 +1,27 @@
+{
+    "name": "dflydev/git-subsplit-github-webhook",
+    "description": "GitHub WebHook for Git subsplits managed by dflydev-git-subsplit",
+    "keywords": ["github", "webhook", "subsplit"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Dragonfly Development Inc.",
+            "email": "info@dflydev.com",
+            "homepage": "http://dflydev.com"
+        },
+        {
+            "name": "Beau Simensen",
+            "email": "beau@dflydev.com",
+            "homepage": "http://beausimensen.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3",
+        "predis/predis": "0.8.*"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    }
+}
