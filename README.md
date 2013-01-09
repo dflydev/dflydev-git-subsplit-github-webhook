@@ -1,7 +1,7 @@
 Git Subsplit GitHub WebHook
 ===========================
 
-[GitHub][1] WebHook for Git subsplits managed by [dflydev-git-subsplit][2].
+[GitHub][1] WebHook for Git subsplits managed by [git-subsplit][2].
 
 Automates the process of keeping one-way read-only subtree splits up to date
 with the source repository.
@@ -23,7 +23,7 @@ Usage
 
 ### git-subsplit
 
-Ensure that [dflydev-git-subsplit][2] is installed correctly. If is not available
+Ensure that [git-subsplit][2] is installed correctly. If is not available
 in your version of git (likely true for versions older than 1.7.11)
 please install it manually from [here][5].
 
@@ -145,7 +145,7 @@ Each project description object can have the following properties:
    optional. If it is not defined the repository URL will be read from the
    incoming request.
  * **splits**:
-   An array of subsplit definitions as defined by [dflydev-git-subsplit][2].
+   An array of subsplit definitions as defined by [git-subsplit][2].
    The pattern for the splits is `${subPath}:${url}`.
 
 
