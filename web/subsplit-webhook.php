@@ -18,7 +18,7 @@ if (!in_array($_SERVER['REMOTE_ADDR'], $allowedIps)) {
     exit;
 }
 
-$body = file_get_contents('php://input');
+$body = $_POST['payload'];
 
 $redis = new Predis\Client();
 
