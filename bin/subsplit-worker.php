@@ -74,8 +74,8 @@ while ($body = $redis->brpoplpush('dflydev-git-subsplit:incoming', 'dflydev-git-
     }
 
     $command = implode(' && ', array(
-        sprintf('cd %s', $projectWorkingDirectory),
-        sprintf('( git subsplit init %s || true )', $repositoryUrl),
+        sprintf('cd %s', escapeshellarg($projectWorkingDirectory)),
+        sprintf('( git subsplit init %s || true )', escapeshellarg($repositoryUrl)),
         'git subsplit update',
         implode(' ', $publishCommand)
     ));
