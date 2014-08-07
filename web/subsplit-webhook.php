@@ -8,11 +8,15 @@ $configFilename = file_exists(__DIR__.'/../config.json')
 
 $config = json_decode(file_get_contents($configFilename), true);
 
+/**
+ * See https://help.github.com/articles/what-ip-addresses-does-github-use-that-i-should-whitelist
+ * to get current list of used IP addresses by GitHub.
+ */
 $allowedIps = isset($config['allowed-ips'])
     ? $config['allowed-ips']
-    : array('207.97.227.253', '50.57.128.197', '108.171.174.178');
+    : array('192.30.252.0/22');
 
-if (!in_array($_SERVER['REMOTE_ADDR'], $allowedIps)) {
+if (!checkIPv4Address($_SERVER['REMOTE_ADDR'], $allowedIps)) {
     header('HTTP/1.1 403 Forbidden');
     echo sprintf("Host %s is not allowed to connect.\n", $_SERVER['REMOTE_ADDR']);
     exit;
