@@ -19,6 +19,10 @@
         "php": ">=5.3.3",
         "predis/predis": "0.8.*"
     },
+    "autoload": {
+        "psr-0": { "": "src/" },
+        "files": [ "src/functions.php" ]
+    },
     "extra": {
         "branch-alias": {
             "dev-master": "1.0-dev"
