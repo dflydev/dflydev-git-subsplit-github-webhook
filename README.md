@@ -14,7 +14,7 @@ This means that the user running the worker should have its key added to
 the appropriate GitHub accounts.
 
 During testing it would make sense to run the worker manually. For production
-deployments it would probably make more sense to runt he worker using something
+deployments it would probably make more sense to run the worker using something
 along the lines of [upstart][6] or [supervisor][7].
 
 
