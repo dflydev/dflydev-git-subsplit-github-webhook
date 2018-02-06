@@ -10,8 +10,8 @@ The WebHook works in two parts, a web listener and a worker. The web listener
 adds requests to Redis and the worker processes the requests.
 
 The worker will interact with the system's git as the user running the worker.
-This means that the user running the worker should have its key added to
-the appropriate GitHub accounts.
+**This means that the user running the worker should have its key added to
+the appropriate GitHub accounts.**
 
 During testing it would make sense to run the worker manually. For production
 deployments it would probably make more sense to runt he worker using something
@@ -27,19 +27,21 @@ Ensure that [git-subsplit][2] is installed correctly. If is not available
 in your version of git (likely true for versions older than 1.7.11)
 please install it manually from [here][5].
 
+You should initialize subsplit with a git repository:
+
+    cd /home/myuser
+    git subsplit init git@github.com:orga/repo.git
+
+It will create a `.subsplit` working directory that you will use later.
 
 ### Installation
 
-#### If You Already Have Composer
-
-    composer create-project dflydev/git-subsplit-github-webhook:1.0.x-dev -n webhook
+    git clone git@github.com:dflydev/dflydev-git-subsplit-github-webhook.git
+    mv dflydev-git-subsplit-github-webhook/ webhook/
     cd webhook
+    composer install
 
-#### If You Need Composer
-
-    curl -s https://getcomposer.org/installer | php
-    php composer.phar create-project dflydev/git-subsplit-github-webhook:1.0.x-dev -n webhook
-    cd webhook
+N.B. If you need composer : [https://getcomposer.org/download/][8]
 
 ### Redis
 
@@ -49,6 +51,7 @@ Ensure that the Redis server is running.
 
 Copy `config.json.dist` to `config.json` and edit it accordingly. Please make sure
 to pay special attention to setting `working-directory` correctly.
+Don't forget to change the `webhook-secret` to secure your webhook.
 
 ### Web Server
 
@@ -63,7 +66,7 @@ Start the worker by running `php bin/subsplit-worker.php`.
 ### GitHub
 
 From your repository go to **Settings** / **Service Hooks** / **WebHook URLs**.
-Enter the URL to your WebHook and click **Update Settings**.
+Enter the URL to your WebHook and your secret. Then click **Update Settings**.
 
 Click **WebHook URLs** again and click **Test Hook**.
 
@@ -77,26 +80,13 @@ Configuration
 
 ```
 {
-    "working-directory": "/home/myuser/.git-subsplit-working",
-    "allowed-ips": ["127.0.0.1"],
+    "working-directory": "/home/myuser/.subsplit",
+    "webhook-secret": "ThisTokenIsNotSoSecretChangeIt",
     "projects": {
-        "sculpin": {
-            "url": "https://github.com/sculpin/sculpin",
-            "repository-url": "git@github.com:sculpin/sculpin.git",
+        "project-1": {
+            "url": "git@github.com:orga/private-repo.git",
             "splits": [
-                "src/Sculpin/Core:git@github.com:sculpin/core.git"
-            ]
-        },
-        "react": {
-            "url": "https://github.com/reactphp/react",
-            "splits": [
-                "src/React/EventLoop:git@github.com:reactphp/event-loop.git",
-                "src/React/Stream:git@github.com:reactphp/stream.git",
-                "src/React/Cache:git@github.com:reactphp/cache.git",
-                "src/React/Socket:git@github.com:reactphp/socket.git",
-                "src/React/Http:git@github.com:reactphp/http.git",
-                "src/React/HttpClient:git@github.com:reactphp/http-client.git",
-                "src/React/Dns:git@github.com:reactphp/dns.git"
+                "src/public:git@github.com:orga/public-repo.git"
             ]
         }
     }
@@ -112,12 +102,12 @@ Configuration
 The directory in which the subsplits will be processed. This is more or less
 a temporary directory in which all projects will have their subsplit initialized.
 
-#### allowed-ips
+#### webhook-secret
 
-*Array. Default: ['207.97.227.253', '50.57.128.197', '108.171.174.178']*
+*String. Default: "ThisTokenIsNotSoSecretChangeIt". **Required.***
 
-The IP addresses that are allowed to call the WebHook. The default values are
-GitHub's IP addresses published here.
+This is a secret string that should be unique to your webhook. It's used to secure communication between the webhook and github.
+You can use a *secret generator* if you want a strong string.
 
 #### projects
 
@@ -135,9 +125,8 @@ Each project description object can have the following properties:
    `url` property against each project's listed `url` property to determine
    which project the request is for.
    
-   This URL will look like: **https://github.com/sculpin/sculpin**
+   This URL should be like: **git@github.com:orga/repo.git**
    
-   Note: The URL is secure (http**s**) and does not contain `.git` extension.
  * **repository-url**:
    The URL that `git` will use to check out the project. This setting is
    optional. If it is not defined the repository URL will be read from the
@@ -174,3 +163,4 @@ Thanks Igor. :)
 [5]: https://github.com/apenwarr/git-subtree
 [6]: http://upstart.ubuntu.com
 [7]: http://supervisord.org
+[8]: https://getcomposer.org/download/
