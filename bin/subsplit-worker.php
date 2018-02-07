@@ -21,7 +21,7 @@ while ($body = $redis->brpoplpush('dflydev-git-subsplit:incoming', 'dflydev-git-
     );
 
     foreach ($config['projects'] as $testName => $testProject) {
-        if ($testProject['url'] === $data['repository']['url']) {
+        if ($testProject['url'] === $data['repository']['ssh_url']) {
             $name = $testName;
             $project = $testProject;
             break;
@@ -29,7 +29,7 @@ while ($body = $redis->brpoplpush('dflydev-git-subsplit:incoming', 'dflydev-git-
     }
 
     if (null === $name) {
-        print(sprintf('Skipping request for URL %s (not configured)', $data['repository']['url'])."\n");
+        print(sprintf('Skipping request for URL %s (not configured)', $data['repository']['ssh_url'])."\n");
 
         $redis->lrem('dflydev-git-subsplit:processing', 1, $body);
         $redis->lpush('dflydev-git-subspilt:failures', json_encode($data));
@@ -54,7 +54,7 @@ while ($body = $redis->brpoplpush('dflydev-git-subsplit:incoming', 'dflydev-git-
         $publishCommand[] = escapeshellarg('--no-tags');
         $publishCommand[] = escapeshellarg(sprintf('--heads=%s', $matches[1]));
     } else {
-        print sprintf('Skipping request for URL %s (unexpected reference detected: %s)', $data['repository']['url'], $ref)."\n";
+        print sprintf('Skipping request for URL %s (unexpected reference detected: %s)', $data['repository']['ssh_url'], $ref)."\n";
 
         $redis->lrem('dflydev-git-subsplit:processing', 1, $body);
         $redis->lpush('dflydev-git-subspilt:failures', json_encode($data));
