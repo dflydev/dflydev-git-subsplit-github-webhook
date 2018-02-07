@@ -31,10 +31,19 @@ if (!hash_equals($signature, $hash)) {
     exit;
 }
 
-$body = $_POST['payload'];
+$headers = getallheaders();
+if (isset($headers['Content-Type']) && 'application/json' === $headers['Content-Type']) {
+    $body = file_get_contents('php://input');
+} else {
+    $body = $_POST['payload'];
+}
+
+if (!$body) {
+    header('HTTP/1.1 400 Bad Request', true, 400);
+    exit;
+}
 
 $redis = new Predis\Client();
-
 $redis->lpush('dflydev-git-subsplit:incoming', $body);
 
 echo "Thanks.\n";
